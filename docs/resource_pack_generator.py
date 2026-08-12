@@ -1700,44 +1700,233 @@ my_pack.zip
             self.statusBar().showMessage(f"已套用模板: {item}")
 
     def _css_simple(self) -> str:
-        return """/* 简约白底模板 */
-.cal-root { background: #FFFFFF; color: #1E293B; font-family: system-ui, sans-serif; }
-.cal-header { padding: 16px; border-bottom: 1px solid #E2E8F0; }
-.cal-title { font-size: 18px; font-weight: bold; }
-.cal-subtitle { color: #64748B; font-size: 12px; }
-.cal-nav-btn { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 6px; }
-.cal-nav-btn:hover { background: #E2E8F0; }
-.cal-day { display: block; width: calc(100% / 7); text-align: center; padding: 8px; }
-.cal-day.today { background: #3B82F620; border-radius: 8px; }
-.cal-day.has-event::after { content: ""; display: block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin: 2px auto 0; }
-.cal-event { padding: 12px; background: #F8FAFC; border-radius: 8px; margin-bottom: 8px; }"""
+        return """/* ================================
+   简约白底模板
+   ================================ */
+
+/* 根容器 */
+.cal-root {
+    background: #FFFFFF;
+    color: #1E293B;
+    font-family: system-ui, sans-serif;
+}
+
+/* 头部 */
+.cal-header {
+    padding: 16px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.cal-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cal-subtitle {
+    color: #64748B;
+    font-size: 12px;
+}
+
+/* 导航按钮 */
+.cal-nav-btn {
+    background: #F1F5F9;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+}
+
+.cal-nav-btn:hover {
+    background: #E2E8F0;
+}
+
+/* 日期格子 */
+.cal-day {
+    display: block;
+    width: calc(100% / 7);
+    text-align: center;
+    padding: 8px;
+}
+
+.cal-day.today {
+    background: #3B82F620;
+    border-radius: 8px;
+}
+
+.cal-day.has-event::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    margin: 2px auto 0;
+}
+
+/* 事件卡片 */
+.cal-event {
+    padding: 12px;
+    background: #F8FAFC;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}"""
 
     def _css_dark(self) -> str:
-        return """/* 暗色深夜模板 */
-.cal-root { background: #0F172A; color: #E2E8F0; font-family: system-ui, sans-serif; }
-.cal-header { padding: 16px; border-bottom: 1px solid #1E293B; }
-.cal-title { font-size: 18px; font-weight: bold; color: #F1F5F9; }
-.cal-subtitle { color: #94A3B8; font-size: 12px; }
-.cal-nav-btn { background: #1E293B; border: 1px solid #334155; border-radius: 6px; color: #E2E8F0; }
-.cal-nav-btn:hover { background: #334155; }
-.cal-day { display: block; width: calc(100% / 7); text-align: center; padding: 8px; color: #CBD5E1; }
-.cal-day.today { background: #3B82F630; border-radius: 8px; color: #F1F5F9; }
-.cal-day.future { opacity: 0.4; }
-.cal-day.has-event::after { content: ""; display: block; width: 6px; height: 6px; border-radius: 50%; background: #FBBF24; margin: 2px auto 0; }
-.cal-event { padding: 12px; background: #1E293B; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #3B82F6; }"""
+        return """/* ================================
+   暗色深夜模板
+   ================================ */
+
+/* 根容器 */
+.cal-root {
+    background: #0F172A;
+    color: #E2E8F0;
+    font-family: system-ui, sans-serif;
+}
+
+/* 头部 */
+.cal-header {
+    padding: 16px;
+    border-bottom: 1px solid #1E293B;
+}
+
+.cal-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #F1F5F9;
+}
+
+.cal-subtitle {
+    color: #94A3B8;
+    font-size: 12px;
+}
+
+/* 导航按钮 */
+.cal-nav-btn {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: #E2E8F0;
+}
+
+.cal-nav-btn:hover {
+    background: #334155;
+}
+
+/* 日期格子 */
+.cal-day {
+    display: block;
+    width: calc(100% / 7);
+    text-align: center;
+    padding: 8px;
+    color: #CBD5E1;
+}
+
+.cal-day.today {
+    background: #3B82F630;
+    border-radius: 8px;
+    color: #F1F5F9;
+}
+
+.cal-day.future {
+    opacity: 0.4;
+}
+
+.cal-day.has-event::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FBBF24;
+    margin: 2px auto 0;
+}
+
+/* 事件卡片 */
+.cal-event {
+    padding: 12px;
+    background: #1E293B;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid #3B82F6;
+}"""
 
     def _css_gradient(self) -> str:
-        return """/* 活力渐变模板 */
-.cal-root { background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); color: #FFFFFF; font-family: system-ui, sans-serif; min-height: 100vh; }
-.cal-header { padding: 20px; }
-.cal-title { font-size: 22px; font-weight: bold; color: #FFFFFF; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-.cal-subtitle { color: rgba(255,255,255,0.8); font-size: 13px; }
-.cal-nav-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; color: #FFFFFF; backdrop-filter: blur(10px); }
-.cal-nav-btn:hover { background: rgba(255,255,255,0.3); }
-.cal-day { display: block; width: calc(100% / 7); text-align: center; padding: 10px; border-radius: 10px; color: rgba(255,255,255,0.9); }
-.cal-day.today { background: rgba(255,255,255,0.3); font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-.cal-day.has-event::after { content: ""; display: block; width: 6px; height: 6px; border-radius: 50%; background: #FDE047; margin: 2px auto 0; box-shadow: 0 0 8px #FDE047; }
-.cal-event { padding: 14px; background: rgba(255,255,255,0.2); border-radius: 12px; margin-bottom: 10px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }"""
+        return """/* ================================
+   活力渐变模板
+   ================================ */
+
+/* 根容器 */
+.cal-root {
+    background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+    color: #FFFFFF;
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+}
+
+/* 头部 */
+.cal-header {
+    padding: 20px;
+}
+
+.cal-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cal-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+}
+
+/* 导航按钮 */
+.cal-nav-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: #FFFFFF;
+    backdrop-filter: blur(10px);
+}
+
+.cal-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 日期格子 */
+.cal-day {
+    display: block;
+    width: calc(100% / 7);
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cal-day.today {
+    background: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cal-day.has-event::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FDE047;
+    margin: 2px auto 0;
+    box-shadow: 0 0 8px #FDE047;
+}
+
+/* 事件卡片 */
+.cal-event {
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}"""
 
     def _export_pack(self):
         path = QFileDialog.getExistingDirectory(self, "选择导出目录")
