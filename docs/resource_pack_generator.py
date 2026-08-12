@@ -317,10 +317,12 @@ class HudColorsPanel(QGroupBox):
         for style_id, style_data in BUILTIN_STYLES.items():
             btn = QPushButton(style_data["name"])
             btn.setFixedHeight(24)
+            btn.setCursor(Qt.PointingHandCursor)
             btn.setStyleSheet("""
-                QPushButton { border: 1px solid #ddd; border-radius: 3px;
-                              background: #f8f8f8; padding: 0 8px; }
-                QPushButton:hover { background: #e8e8e8; border-color: #999; }
+                QPushButton { border: 1px solid #CBD5E1; border-radius: 12px;
+                              background: #F8FAFC; padding: 0 12px; color: #334155;
+                              font-size: 11px; }
+                QPushButton:hover { background: #E2E8F0; border-color: #6366F1; color: #4F46E5; }
             """)
             btn.clicked.connect(lambda _c=False, sid=style_id: self._apply_preset(sid))
             preset_layout.addWidget(btn)
@@ -405,11 +407,12 @@ class StyleEditDialog(QDialog):
         layout.addWidget(self.hud_panel, 1)
 
         self.preview_label = QLabel("HUD 预览")
+        self.preview_label.setObjectName("previewLabel")
         self.preview_label.setAlignment(Qt.AlignCenter)
-        self.preview_label.setStyleSheet("font-weight: bold; color: #333;")
         layout.addWidget(self.preview_label)
 
         self.hud_preview = QFrame()
+        self.hud_preview.setObjectName("hudPreview")
         self.hud_preview.setFixedSize(280, 80)
         self.hud_preview.setCursor(Qt.PointingHandCursor)
         self.hud_preview_layout = QVBoxLayout(self.hud_preview)
@@ -507,6 +510,638 @@ class StyleEditDialog(QDialog):
 
 
 # ============================================================
+# 主题系统
+# ============================================================
+
+LIGHT_THEME = """
+QMainWindow, QWidget {
+    background-color: #F8FAFC;
+    color: #1E293B;
+    font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+    font-size: 13px;
+}
+
+QToolBar {
+    background: #FFFFFF;
+    border: none;
+    border-bottom: 1px solid #E2E8F0;
+    padding: 6px 10px;
+    spacing: 4px;
+}
+
+QToolBar QToolButton {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 6px 14px;
+    color: #334155;
+    font-weight: 500;
+}
+
+QToolBar QToolButton:hover {
+    background: #F1F5F9;
+    border: 1px solid #CBD5E1;
+    color: #0F172A;
+}
+
+QToolBar QToolButton:pressed {
+    background: #E2E8F0;
+}
+
+QStatusBar {
+    background: #FFFFFF;
+    border-top: 1px solid #E2E8F0;
+    color: #64748B;
+    padding: 4px 12px;
+}
+
+QGroupBox {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    margin-top: 14px;
+    padding: 16px 12px 12px 12px;
+    font-weight: 600;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 14px;
+    padding: 4px 10px;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    color: #334155;
+}
+
+QPushButton {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 6px 16px;
+    color: #334155;
+    font-weight: 500;
+    min-height: 20px;
+}
+
+QPushButton:hover {
+    background: #F1F5F9;
+    border-color: #94A3B8;
+    color: #0F172A;
+}
+
+QPushButton:pressed {
+    background: #E2E8F0;
+}
+
+QPushButton#btnAdd {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnAdd:hover { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); }
+
+QPushButton#btnEdit {
+    background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnEdit:hover { background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%); }
+
+QPushButton#btnDelete {
+    background: linear-gradient(135deg, #F43F5E 0%, #EF4444 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnDelete:hover { background: linear-gradient(135deg, #E11D48 0%, #DC2626 100%); }
+
+QPushButton#btnReset {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnReset:hover { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); }
+
+QPushButton#btnExport {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnExport:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+
+QListWidget {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 6px;
+    outline: none;
+}
+
+QListWidget::item {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 2px 4px;
+    color: #334155;
+}
+
+QListWidget::item:hover {
+    background: #F1F5F9;
+}
+
+QListWidget::item:selected {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    color: white;
+    border: none;
+}
+
+QTabWidget::pane {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    top: -1px;
+}
+
+QTabBar::tab {
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 8px 20px;
+    margin-right: 2px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+QTabBar::tab:selected {
+    background: #FFFFFF;
+    color: #4F46E5;
+    border-bottom: 2px solid #FFFFFF;
+    margin-bottom: -1px;
+}
+
+QTabBar::tab:hover:!selected {
+    background: #E2E8F0;
+    color: #334155;
+}
+
+QLineEdit, QSpinBox, QComboBox {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #1E293B;
+    selection-background-color: #6366F1;
+    selection-color: white;
+}
+
+QLineEdit:focus, QSpinBox:focus, QComboBox:focus {
+    border-color: #6366F1;
+    border-width: 2px;
+    padding: 5px 9px;
+}
+
+QTextEdit, QPlainTextEdit {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 10px;
+    color: #1E293B;
+    selection-background-color: #6366F1;
+    selection-color: white;
+}
+
+QTextEdit:focus, QPlainTextEdit:focus {
+    border-color: #6366F1;
+}
+
+QCheckBox {
+    spacing: 8px;
+    color: #334155;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid #CBD5E1;
+    background: white;
+}
+
+QCheckBox::indicator:checked {
+    background: #6366F1;
+    border-color: #6366F1;
+    image: none;
+}
+
+QLabel {
+    color: #334155;
+}
+
+QLabel#listHeader {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+    padding: 4px 2px;
+}
+
+QLabel#previewLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4F46E5;
+    padding: 6px;
+}
+
+QSplitter::handle {
+    background: #E2E8F0;
+    width: 2px;
+}
+
+QSplitter::handle:hover {
+    background: #6366F1;
+}
+
+QScrollBar:vertical {
+    background: #F1F5F9;
+    width: 10px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: #CBD5E1;
+    border-radius: 5px;
+    min-height: 30px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #94A3B8;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0;
+}
+
+QScrollBar:horizontal {
+    background: #F1F5F9;
+    height: 10px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #CBD5E1;
+    border-radius: 5px;
+    min-width: 30px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #94A3B8;
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    width: 0;
+}
+
+QFrame#hudPreview {
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+}
+
+QDialog {
+    background: #F8FAFC;
+}
+
+QDialogButtonBox QPushButton {
+    min-width: 80px;
+}
+
+QStatusBar QLabel {
+    color: #64748B;
+}
+"""
+
+DARK_THEME = """
+QMainWindow, QWidget {
+    background-color: #0F172A;
+    color: #E2E8F0;
+    font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+    font-size: 13px;
+}
+
+QToolBar {
+    background: #1E293B;
+    border: none;
+    border-bottom: 1px solid #334155;
+    padding: 6px 10px;
+    spacing: 4px;
+}
+
+QToolBar QToolButton {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 6px 14px;
+    color: #CBD5E1;
+    font-weight: 500;
+}
+
+QToolBar QToolButton:hover {
+    background: #334155;
+    border: 1px solid #475569;
+    color: #F1F5F9;
+}
+
+QToolBar QToolButton:pressed {
+    background: #475569;
+}
+
+QStatusBar {
+    background: #1E293B;
+    border-top: 1px solid #334155;
+    color: #94A3B8;
+    padding: 4px 12px;
+}
+
+QGroupBox {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    margin-top: 14px;
+    padding: 16px 12px 12px 12px;
+    font-weight: 600;
+    color: #E2E8F0;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 14px;
+    padding: 4px 10px;
+    background: #334155;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: #F1F5F9;
+}
+
+QPushButton {
+    background: #334155;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    padding: 6px 16px;
+    color: #CBD5E1;
+    font-weight: 500;
+    min-height: 20px;
+}
+
+QPushButton:hover {
+    background: #475569;
+    border-color: #64748B;
+    color: #F1F5F9;
+}
+
+QPushButton:pressed {
+    background: #64748B;
+}
+
+QPushButton#btnAdd {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnAdd:hover { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); }
+
+QPushButton#btnEdit {
+    background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnEdit:hover { background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%); }
+
+QPushButton#btnDelete {
+    background: linear-gradient(135deg, #F43F5E 0%, #EF4444 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnDelete:hover { background: linear-gradient(135deg, #E11D48 0%, #DC2626 100%); }
+
+QPushButton#btnReset {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnReset:hover { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); }
+
+QPushButton#btnExport {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+QPushButton#btnExport:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+
+QListWidget {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 6px;
+    outline: none;
+}
+
+QListWidget::item {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 2px 4px;
+    color: #CBD5E1;
+}
+
+QListWidget::item:hover {
+    background: #334155;
+}
+
+QListWidget::item:selected {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    color: white;
+    border: none;
+}
+
+QTabWidget::pane {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    top: -1px;
+}
+
+QTabBar::tab {
+    background: #334155;
+    border: 1px solid #475569;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 8px 20px;
+    margin-right: 2px;
+    color: #94A3B8;
+    font-weight: 500;
+}
+
+QTabBar::tab:selected {
+    background: #1E293B;
+    color: #A5B4FC;
+    border-bottom: 2px solid #1E293B;
+    margin-bottom: -1px;
+}
+
+QTabBar::tab:hover:!selected {
+    background: #475569;
+    color: #E2E8F0;
+}
+
+QLineEdit, QSpinBox, QComboBox {
+    background: #0F172A;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #E2E8F0;
+    selection-background-color: #6366F1;
+    selection-color: white;
+}
+
+QLineEdit:focus, QSpinBox:focus, QComboBox:focus {
+    border-color: #818CF8;
+    border-width: 2px;
+    padding: 5px 9px;
+}
+
+QTextEdit, QPlainTextEdit {
+    background: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px;
+    color: #E2E8F0;
+    selection-background-color: #6366F1;
+    selection-color: white;
+}
+
+QTextEdit:focus, QPlainTextEdit:focus {
+    border-color: #818CF8;
+}
+
+QCheckBox {
+    spacing: 8px;
+    color: #CBD5E1;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid #475569;
+    background: #0F172A;
+}
+
+QCheckBox::indicator:checked {
+    background: #6366F1;
+    border-color: #6366F1;
+    image: none;
+}
+
+QLabel {
+    color: #CBD5E1;
+}
+
+QLabel#listHeader {
+    font-size: 15px;
+    font-weight: 700;
+    color: #F1F5F9;
+    padding: 4px 2px;
+}
+
+QLabel#previewLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #A5B4FC;
+    padding: 6px;
+}
+
+QSplitter::handle {
+    background: #334155;
+    width: 2px;
+}
+
+QSplitter::handle:hover {
+    background: #6366F1;
+}
+
+QScrollBar:vertical {
+    background: #1E293B;
+    width: 10px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: #475569;
+    border-radius: 5px;
+    min-height: 30px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #64748B;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0;
+}
+
+QScrollBar:horizontal {
+    background: #1E293B;
+    height: 10px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #475569;
+    border-radius: 5px;
+    min-width: 30px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #64748B;
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    width: 0;
+}
+
+QFrame#hudPreview {
+    background: #1E293B;
+    border: 2px solid #334155;
+    border-radius: 12px;
+}
+
+QDialog {
+    background: #0F172A;
+}
+
+QDialogButtonBox QPushButton {
+    min-width: 80px;
+}
+
+QStatusBar QLabel {
+    color: #94A3B8;
+}
+"""
+
+
+# ============================================================
 # 主窗口
 # ============================================================
 
@@ -523,11 +1158,28 @@ class ResourcePackGenerator(QMainWindow):
         self.pack_format = 15
         self.pack_description = "我的日历自定义样式"
         self._current_index = -1
+        self._dark_theme = False
 
+        self._apply_theme()
         self._setup_ui()
         self._setup_toolbar()
         self._setup_statusbar()
         self._load_builtin_styles()
+
+    def _apply_theme(self):
+        app = QApplication.instance()
+        if self._dark_theme:
+            app.setStyleSheet(DARK_THEME)
+        else:
+            app.setStyleSheet(LIGHT_THEME)
+
+    def _toggle_theme(self):
+        self._dark_theme = not self._dark_theme
+        self._apply_theme()
+        if hasattr(self, '_theme_action'):
+            self._theme_action.setText("☀️ 亮色主题" if self._dark_theme else "🌙 暗色主题")
+        self.statusBar().showMessage(
+            f"已切换到{'暗色' if self._dark_theme else '亮色'}主题")
 
     def _setup_ui(self):
         central = QWidget()
@@ -545,15 +1197,18 @@ class ResourcePackGenerator(QMainWindow):
         left_layout.setSpacing(6)
 
         list_header = QLabel("样式列表")
+        list_header.setObjectName("listHeader")
         list_header.setStyleSheet("font-weight: bold; font-size: 14px; padding: 4px;")
         left_layout.addWidget(list_header)
 
         btn_layout = QHBoxLayout()
         self.btn_add = QPushButton("➕ 新增")
+        self.btn_add.setObjectName("btnAdd")
         self.btn_add.clicked.connect(self._add_style)
         btn_layout.addWidget(self.btn_add)
 
         self.btn_edit = QPushButton("✏️ 编辑")
+        self.btn_edit.setObjectName("btnEdit")
         self.btn_edit.clicked.connect(self._edit_style)
         btn_layout.addWidget(self.btn_edit)
 
@@ -562,10 +1217,12 @@ class ResourcePackGenerator(QMainWindow):
         btn_layout.addWidget(self.btn_clone)
 
         self.btn_delete = QPushButton("🗑️ 删除")
+        self.btn_delete.setObjectName("btnDelete")
         self.btn_delete.clicked.connect(self._delete_style)
         btn_layout.addWidget(self.btn_delete)
 
         self.btn_reset = QPushButton("↺ 恢复初始")
+        self.btn_reset.setObjectName("btnReset")
         self.btn_reset.setToolTip("将所有样式和设置恢复为内置默认值")
         self.btn_reset.clicked.connect(self._reset_to_initial)
         btn_layout.addWidget(self.btn_reset)
@@ -642,7 +1299,8 @@ class ResourcePackGenerator(QMainWindow):
         self.css_path_edit.setPlaceholderText("styles/my_style.css")
         css_btn_layout.addWidget(self.css_path_edit, 1)
 
-        btn_template = QPushButton("套用模板")
+        btn_template = QPushButton("🎨 套用模板")
+        btn_template.setObjectName("btnEdit")
         btn_template.clicked.connect(self._apply_css_template)
         css_btn_layout.addWidget(btn_template)
         css_layout.addLayout(css_btn_layout)
@@ -747,6 +1405,11 @@ my_pack.zip
         toolbar.addAction(act_export_zip)
 
         toolbar.addSeparator()
+
+        act_theme = QAction("🌙 暗色主题", self)
+        act_theme.triggered.connect(self._toggle_theme)
+        self._theme_action = act_theme
+        toolbar.addAction(act_theme)
 
         act_help = QAction("❓ 帮助", self)
         act_help.triggered.connect(lambda: self.tabs.setCurrentIndex(3))
@@ -1097,6 +1760,9 @@ my_pack.zip
 def main():
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
+
+    # Apply light theme by default before creating window
+    app.setStyleSheet(LIGHT_THEME)
 
     window = ResourcePackGenerator()
     window.show()
