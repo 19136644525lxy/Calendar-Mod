@@ -198,6 +198,27 @@ CSS files can use `__ROOT_PAD__`, `__GAP__`, and other double-underscore variabl
 
 For detailed resource pack creation guide, see [Resource Pack Guide](./docs/RESOURCEPACK_GUIDE_EN.md).
 
+### Resource Pack Generator Tool & Tutorials
+
+The mod provides a GUI-based resource pack generator and detailed tutorials to help you quickly create custom styles:
+
+| Resource | Description |
+|----------|-------------|
+| 📦 Resource Pack Generator | PySide6 GUI tool for visual style editing, HUD color config, ZIP export |
+| 📖 Resource Pack Guide | Detailed docs covering all fields, CSS properties, HTML templates |
+| 🛠️ Tool Usage Guide | Complete usage instructions for the generator tool |
+
+👉 **Tools & Tutorials**: [docs/](https://github.com/19136644525lxy/Calendar-Mod/tree/main/docs)
+
+Quick start:
+```bash
+cd docs
+pip install -r requirements.txt
+python resource_pack_generator.py
+```
+
+Or double-click `docs/启动资源包生成器.bat` on Windows.
+
 ---
 
 ## Time System

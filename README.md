@@ -196,6 +196,27 @@
 
 CSS 文件中可使用 `__ROOT_PAD__`、`__GAP__` 等双下划线变量，由 Java 动态替换为屏幕适配的像素值。
 
+### 资源包制作工具与教程
+
+模组提供了带 GUI 界面的资源包生成器和详细教程，帮助快速创建自定义样式：
+
+| 资源 | 说明 |
+|------|------|
+| 📦 资源包生成器 | PySide6 GUI 工具，可视化编辑样式、配置 HUD 颜色、导出 ZIP |
+| 📖 资源包制作教程 | 中英文详细文档，涵盖所有字段、CSS 属性、HTML 模板 |
+| 🛠️ 工具使用教程 | 生成器工具的完整使用说明 |
+
+👉 **工具与教程目录**：[docs/](https://github.com/19136644525lxy/Calendar-Mod/tree/main/docs)
+
+快速启动：
+```bash
+cd docs
+pip install -r requirements.txt
+python resource_pack_generator.py
+```
+
+或直接双击 `docs/启动资源包生成器.bat`（Windows）。
+
 ---
 
 ## 时间系统说明
