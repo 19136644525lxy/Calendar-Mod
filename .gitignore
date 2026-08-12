@@ -1,0 +1,52 @@
+# === IDE ===
+eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+out
+*.ipr
+*.iws
+*.iml
+.idea
+.vscode
+
+# === Gradle ===
+build
+.gradle
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# === Minecraft Forge MDK ===
+forge*changelog.txt
+run
+run-data
+
+# === 临时目录（Forge 映射源码等，体积大不应上传） ===
+temp/
+
+# === 构建产物目录 ===
+mcmodsrepo/
+
+# === 本地依赖 jar（构建时需自行放置） ===
+libs/*
+!libs/.gitkeep
+
+# === Maven 发布产物 ===
+HtmlCraftAPI/build
+
+# === 操作系统生成文件 ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# === 日志文件 ===
+*.log
+
+# === 编译产物 ===
+*.class

@@ -1,0 +1,13 @@
+# 本地依赖目录
+
+构建前需自行获取以下 jar 放入此目录：
+
+1. `cloth-config-11.1.136-forge.jar`
+   - Cloth Config API，用于配置界面
+   - Maven: `me.shedaniel:cloth-config:11.1.136-forge`
+
+2. `[模组目录] catalogue-forge-1.20.1-1.8.0.jar`
+   - Catalogue 模组，用于在模组列表中显示配置按钮
+   - 需从 CurseForge/Modrinth 下载对应版本
+
+也可修改 `build.gradle` 将本地 jar 引用改为 Maven 依赖。

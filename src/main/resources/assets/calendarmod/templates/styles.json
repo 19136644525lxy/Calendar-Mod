@@ -1,0 +1,100 @@
+{
+  "styles": [
+    {
+      "id": "default",
+      "name": "灰白(默认)",
+      "description": "默认灰白色调",
+      "file": "calendar_screen.css",
+      "builtin": true,
+      "hud": {
+        "shadow": "#00000028",
+        "body": "#F7F7F8E8",
+        "decor": "#E4E7ECFF",
+        "border": "#0000001A",
+        "textPrimary": "#1E293BFF",
+        "textSecondary": "#475569FF",
+        "textEvent": "#B45309FF"
+      }
+    },
+    {
+      "id": "dark",
+      "name": "暗夜",
+      "description": "深色暗色调",
+      "file": "styles/dark.css",
+      "builtin": true,
+      "hud": {
+        "shadow": "#00000060",
+        "body": "#1E1E24E8",
+        "decor": "#2A2A32FF",
+        "border": "#FFFFFF1A",
+        "textPrimary": "#FFFFFFFF",
+        "textSecondary": "#A0A0B0FF",
+        "textEvent": "#FFB74DFF"
+      }
+    },
+    {
+      "id": "ocean",
+      "name": "海洋",
+      "description": "蓝色科技风",
+      "file": "styles/ocean.css",
+      "builtin": true,
+      "hud": {
+        "shadow": "#1976D230",
+        "body": "#E3F2FDE8",
+        "decor": "#1976D2FF",
+        "border": "#1976D220",
+        "textPrimary": "#0D47A1FF",
+        "textSecondary": "#546E7AFF",
+        "textEvent": "#E65100FF"
+      }
+    },
+    {
+      "id": "forest",
+      "name": "森林",
+      "description": "绿色自然风",
+      "file": "styles/forest.css",
+      "builtin": true,
+      "hud": {
+        "shadow": "#2E7D3228",
+        "body": "#E8F5E9E8",
+        "decor": "#2E7D32FF",
+        "border": "#2E7D3218",
+        "textPrimary": "#1B5E20FF",
+        "textSecondary": "#388E3CFF",
+        "textEvent": "#E65100FF"
+      }
+    },
+    {
+      "id": "mystic",
+      "name": "幻境",
+      "description": "紫色神秘风",
+      "file": "styles/mystic.css",
+      "builtin": true,
+      "hud": {
+        "shadow": "#6A1B9A28",
+        "body": "#F3E5F5E8",
+        "decor": "#6A1B9AFF",
+        "border": "#6A1B9A18",
+        "textPrimary": "#4A148CFF",
+        "textSecondary": "#7B1FA2FF",
+        "textEvent": "#E65100FF"
+      }
+    },
+    {
+      "id": "minimal",
+      "name": "极简",
+      "description": "简约扁平风",
+      "file": "styles/minimal.css",
+      "builtin": true,
+      "hud": {
+        "shadow": "#00000014",
+        "body": "#FAFAFAE8",
+        "decor": "#EEEEEEFF",
+        "border": "#0000000A",
+        "textPrimary": "#212121FF",
+        "textSecondary": "#757575FF",
+        "textEvent": "#E65100FF"
+      }
+    }
+  ]
+}
