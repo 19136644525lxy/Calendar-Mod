@@ -565,6 +565,11 @@ class ResourcePackGenerator(QMainWindow):
         self.btn_delete.clicked.connect(self._delete_style)
         btn_layout.addWidget(self.btn_delete)
 
+        self.btn_reset = QPushButton("↺ 恢复初始")
+        self.btn_reset.setToolTip("将所有样式和设置恢复为内置默认值")
+        self.btn_reset.clicked.connect(self._reset_to_initial)
+        btn_layout.addWidget(self.btn_reset)
+
         btn_layout.addStretch()
         left_layout.addLayout(btn_layout)
 
@@ -598,7 +603,6 @@ class ResourcePackGenerator(QMainWindow):
 
         self.pack_preview = QTextEdit()
         self.pack_preview.setReadOnly(True)
-        self.pack_preview.setMaximumBlockCount(100)
         self.pack_preview.setStyleSheet("font-family: Consolas, monospace; font-size: 12px;")
         pack_form.addRow("生成预览:", self.pack_preview)
 
@@ -728,6 +732,10 @@ my_pack.zip
         act_save.triggered.connect(self._save_pack)
         toolbar.addAction(act_save)
 
+        act_reset = QAction("↺ 恢复初始", self)
+        act_reset.triggered.connect(self._reset_to_initial)
+        toolbar.addAction(act_reset)
+
         toolbar.addSeparator()
 
         act_export = QAction("📦 导出资源包", self)
@@ -761,6 +769,44 @@ my_pack.zip
                 hud=data["hud"],
             ))
         self._refresh_list()
+
+    def _reset_to_initial(self):
+        """恢复所有内容为初始默认状态"""
+        ret = QMessageBox.question(
+            self, "恢复初始",
+            "将恢复所有内容为初始默认状态：\n"
+            "• 样式列表恢复为 6 个内置样式\n"
+            "• 资源包描述恢复默认值\n"
+            "• Pack Format 恢复为 15\n"
+            "• CSS 编辑器清空\n\n"
+            "此操作不可撤销，是否继续？",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        )
+        if ret != QMessageBox.Yes:
+            return
+
+        # 恢复内置样式
+        self._load_builtin_styles()
+
+        # 恢复资源包设置
+        self.pack_description = "我的日历自定义样式"
+        self.pack_desc_edit.setText(self.pack_description)
+        self.pack_format = 15
+        self.pack_format_spin.setValue(self.pack_format)
+
+        # 清空 CSS 编辑器
+        self.css_editor.clear()
+        self.css_path_edit.setText("styles/my_style.css")
+
+        # 重置选中
+        self._current_index = -1
+        self.style_list.clearSelection()
+
+        # 更新预览
+        self._update_preview()
+
+        self.statusBar().showMessage("已恢复初始状态")
+        QMessageBox.information(self, "恢复成功", "已恢复所有内容为初始默认状态。")
 
     def _refresh_list(self):
         self.style_list.clear()
