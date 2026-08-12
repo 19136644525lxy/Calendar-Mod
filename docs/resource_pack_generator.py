@@ -1267,21 +1267,35 @@ class ResourcePackGenerator(QMainWindow):
         pack_layout.addStretch()
         self.tabs.addTab(pack_tab, "📦 资源包设置")
 
-        # Tab 2: styles.json 预览
+        # Tab 2: styles.json 预览/编辑
         json_tab = QWidget()
         json_layout = QVBoxLayout(json_tab)
+        json_btn_layout = QHBoxLayout()
+        json_btn_label = QLabel("styles.json")
+        json_btn_label.setStyleSheet("font-weight: bold; color: #4F46E5;")
+        json_btn_layout.addWidget(json_btn_label)
+        json_btn_layout.addStretch()
+
+        btn_sync_from_json = QPushButton("📥 从 JSON 同步")
+        btn_sync_from_json.setToolTip("解析 JSON 编辑内容并同步到列表")
+        btn_sync_from_json.clicked.connect(self._sync_from_json)
+        json_btn_layout.addWidget(btn_sync_from_json)
+
+        btn_format_json = QPushButton("✨ 格式化")
+        btn_format_json.setToolTip("格式化 JSON 缩进")
+        btn_format_json.clicked.connect(self._format_json)
+        json_btn_layout.addWidget(btn_format_json)
+
+        btn_reload_json = QPushButton("🔄 重新生成")
+        btn_reload_json.setToolTip("根据当前样式列表重新生成 JSON")
+        btn_reload_json.clicked.connect(self._update_preview)
+        json_btn_layout.addWidget(btn_reload_json)
+
+        json_layout.addLayout(json_btn_layout)
+
         self.json_preview = QPlainTextEdit()
-        self.json_preview.setReadOnly(True)
         self.json_preview.setFont(QFont("Consolas", 10))
-        self.json_preview.setStyleSheet("""
-            QPlainTextEdit {
-                background: #1E1E1E;
-                color: #D4D4D4;
-                border: 1px solid #333;
-                border-radius: 4px;
-                padding: 8px;
-            }
-        """)
+        self.json_preview.setPlaceholderText('{"styles": [...]}')
         json_layout.addWidget(self.json_preview)
         self.tabs.addTab(json_tab, "📄 styles.json")
 
@@ -1482,11 +1496,7 @@ my_pack.zip
 
     def _on_select_style(self, row: int):
         self._current_index = row
-        if 0 <= row < len(self.styles):
-            s = self.styles[row]
-            self.pack_description = f"我的日历自定义样式"
-            self.pack_desc_edit.setText(self.pack_description)
-            self._update_preview()
+        self._update_preview()
 
     def _update_preview(self):
         data = {
@@ -1501,6 +1511,56 @@ my_pack.zip
             f"styles.json 预览:\n{json_str}"
         )
         self.json_preview.setPlainText(json_str)
+
+    def _sync_from_json(self):
+        """解析 JSON 编辑器内容，同步回样式列表"""
+        text = self.json_preview.toPlainText().strip()
+        if not text:
+            QMessageBox.warning(self, "同步失败", "JSON 内容为空")
+            return
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError as e:
+            QMessageBox.critical(self, "JSON 解析失败", f"JSON 格式错误:\n{e}")
+            return
+
+        if "styles" not in data or not isinstance(data["styles"], list):
+            QMessageBox.warning(self, "同步失败", "JSON 必须包含 'styles' 数组")
+            return
+
+        styles = []
+        for item in data["styles"]:
+            try:
+                styles.append(StyleEntry.from_dict(item))
+            except Exception as e:
+                QMessageBox.warning(self, "同步警告", f"解析样式条目失败:\n{item}\n\n错误: {e}")
+                return
+
+        ret = QMessageBox.question(
+            self, "从 JSON 同步",
+            f"将用 JSON 中的 {len(styles)} 个样式替换当前列表，是否继续？",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        )
+        if ret != QMessageBox.Yes:
+            return
+
+        self.styles = styles
+        self._current_index = -1
+        self._refresh_list()
+        self._update_preview()
+        self.statusBar().showMessage(f"已从 JSON 同步 {len(styles)} 个样式")
+
+    def _format_json(self):
+        """格式化 JSON 编辑器内容"""
+        text = self.json_preview.toPlainText().strip()
+        if not text:
+            return
+        try:
+            data = json.loads(text)
+            self.json_preview.setPlainText(json.dumps(data, ensure_ascii=False, indent=2))
+            self.statusBar().showMessage("JSON 已格式化")
+        except json.JSONDecodeError as e:
+            QMessageBox.critical(self, "格式化失败", f"JSON 格式错误:\n{e}")
 
     def _add_style(self):
         dlg = StyleEditDialog(parent=self)
@@ -1601,6 +1661,17 @@ my_pack.zip
             QMessageBox.critical(self, "错误", f"加载失败: {e}")
 
     def _save_pack(self):
+        # 先同步 JSON 编辑区的修改
+        text = self.json_preview.toPlainText().strip()
+        if text:
+            try:
+                data = json.loads(text)
+                if "styles" in data and isinstance(data["styles"], list):
+                    self.styles = [StyleEntry.from_dict(item) for item in data["styles"]]
+                    self._refresh_list()
+            except json.JSONDecodeError:
+                pass  # JSON 无效时忽略，使用当前列表数据
+
         path, _ = QFileDialog.getSaveFileName(
             self, "保存 styles.json", str(Path.home()),
             "JSON 文件 (*.json)"
@@ -1721,6 +1792,17 @@ my_pack.zip
             QMessageBox.critical(self, "错误", f"导出失败: {e}")
 
     def _do_export(self, pack_dir: Path):
+        # 先同步 JSON 编辑区的修改
+        text = self.json_preview.toPlainText().strip()
+        if text:
+            try:
+                data = json.loads(text)
+                if "styles" in data and isinstance(data["styles"], list):
+                    self.styles = [StyleEntry.from_dict(item) for item in data["styles"]]
+                    self._refresh_list()
+            except json.JSONDecodeError:
+                pass
+
         # 创建目录结构
         styles_dir = pack_dir / "assets" / "calendarmod" / "templates" / "styles"
         styles_dir.mkdir(parents=True, exist_ok=True)
