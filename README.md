@@ -1,6 +1,6 @@
 # Calendar Mod
 
-> Minecraft 1.20.1 Forge / Fabric 及 26.2 Fabric 可自定义历法系统
+> Minecraft 1.20.1 Forge / Fabric、26.1.2 Fabric 及 26.2 Fabric 可自定义历法系统
 
 ## 简介
 
@@ -59,7 +59,7 @@
 
 ## 环境要求
 
-本模组提供三个版本，按所用加载器和 Minecraft 版本选择对应版本即可。
+本模组提供四个版本，按所用加载器和 Minecraft 版本选择对应版本即可。
 
 ### Forge 版（1.20.1）
 
@@ -83,6 +83,18 @@
 | HtmlCraft API | 1.0.0-1.20.1fabric |
 | Cloth Config | 11.x（必需，用于配置界面） |
 | ModMenu | 7.x（可选，用于模组列表配置按钮） |
+
+### Fabric 版（26.1.2）
+
+| 依赖 | 版本 |
+|------|------|
+| Minecraft | 26.1.2 |
+| Fabric Loader | >=0.19.3 |
+| Fabric API | 0.155.2+26.1.2 |
+| Java | 25 |
+| HtmlCraft API | 1.0.0-26.1.2fabric（必需） |
+| Cloth Config | 26.1.154（必需，配置界面） |
+| ModMenu | 18.0.x（可选，模组列表配置按钮） |
 
 ### Fabric 版（26.2）
 
@@ -111,6 +123,13 @@
 1. 安装 Fabric Loader，确保已放入 Fabric API
 2. 将 `htmlcraftapi-1.0.0-1.20.1fabric.jar`、`calendarmod-1.0.0-1.20.1fabric.jar` 和 `cloth-config-11.x-fabric.jar` 放入 `mods` 文件夹
 3. （可选）放入 ModMenu 以在模组列表中显示配置按钮
+4. 启动游戏
+
+### Fabric 版（26.1.2）
+
+1. 安装 Fabric Loader，确保已放入 Fabric API
+2. 将 `htmlcraftapi-1.0.0-26.1.2fabric.jar`、`calendarmod-1.0.0-26.1.2fabric.jar` 和 `cloth-config-26.1.154.jar` 放入 `mods` 文件夹
+3. （可选）放入 `modmenu-18.0.x.jar` 以在模组列表中显示配置按钮
 4. 启动游戏
 
 ### Fabric 版（26.2）
