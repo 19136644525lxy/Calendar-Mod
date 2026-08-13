@@ -1,0 +1,235 @@
+/* =========================================================
+ * 灰白半透明现代化日历样式（全屏自适应分辨率）
+ * 所有尺寸由 CalendarScreen.getCss() 动态计算替换
+ * =======================================================*/
+
+/* === 根容器 === */
+.cal-root {
+    display: flex;
+    flex-direction: column;
+    padding: __ROOT_PAD__px;
+    background: linear-gradient(to bottom, #F8F8F8FA, #F0F0F3FA);
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    color: #2A2A35;
+    gap: __GAP__px;
+}
+
+/* === 顶部标题区 === */
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: __HEADER_PAD__px __HEADER_PAD__px;
+    background: linear-gradient(to right, #FFFFFFFF, #F5F5F7FF);
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border-width: 1px;
+    border-color: #0000000A;
+}
+.cal-nav-btn {
+    width: __NAV_BTN__px;
+    height: __NAV_BTN__px;
+    padding: 0;
+    background: linear-gradient(to bottom, #FFFFFFFF, #EDEDF0FF);
+    border-width: 1px;
+    border-color: #00000012;
+    border-radius: 8px;
+    color: #4A4A55;
+    font-size: __TITLE_FONT__px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.cal-title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.cal-era {
+    font-size: __ERA_FONT__px;
+    color: #8A8A95;
+}
+.cal-title {
+    font-size: __TITLE_FONT__px;
+    color: #1E1E28;
+}
+.cal-subtitle {
+    font-size: __SUBTITLE_FONT__px;
+    color: #6A6A78;
+}
+
+/* === 星期标题行 === */
+.cal-week-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: __DAY_GAP__px;
+}
+.cal-week-cell {
+    text-align: center;
+    padding: __WEEK_PAD__px 0;
+    font-size: __WEEK_FONT__px;
+    color: #6A6A78;
+    background: linear-gradient(to bottom, #F5F5F7CC, #EDEDF0CC);
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: #00000008;
+}
+.cal-week-cell.sun { color: #D97757; }
+.cal-week-cell.sat { color: #5B8BD9; }
+
+/* === 日期网格 === */
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: __DAY_GAP__px;
+}
+.cal-day {
+    height: __DAY_H__px;
+    padding: __DAY_PAD__px;
+    background: linear-gradient(to bottom, #FFFFFFFF, #F6F6F8FF);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    border-width: 1px;
+    border-color: #0000000A;
+}
+.cal-day.empty {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+.cal-day.future {
+    opacity: 0.55;
+}
+.cal-day.today {
+    border-width: 2px;
+    border-color: #5B8BD9B3;
+    background: linear-gradient(to bottom, #EEF4FFFF, #DDE8FAFF);
+    box-shadow: 0 1px 4px rgba(91,139,217,0.18);
+}
+.cal-day.has-event {
+    border-color: #E6B45080;
+    background: linear-gradient(to bottom, #FFF9EEFF, #FBF0D6FF);
+}
+.cal-day.multi-event {
+    border-color: #52B78880;
+    background: linear-gradient(to bottom, #EFFBF5FF, #D7F1E3FF);
+}
+.cal-day-head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.cal-day-num {
+    font-size: __DAY_NUM_FONT__px;
+    color: #3A3A48;
+    text-align: center;
+    width: 100%;
+}
+.cal-day.today .cal-day-num {
+    color: #2563EB;
+}
+.cal-day-dot {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    width: 5px;
+    height: 5px;
+    background-color: #E6B450;
+    border-radius: 3px;
+}
+.cal-day-event {
+    font-size: __DAY_EVENT_FONT__px;
+    color: #B45309;
+}
+.cal-day-count {
+    font-size: __DAY_EVENT_FONT__px;
+    color: #15803D;
+}
+
+/* === 今日事件面板 === */
+.cal-events-panel {
+    padding: __EVENT_ROW_PAD__px __EVENT_ROW_PAD__px;
+    background: linear-gradient(to bottom, #FFFFFFFF, #F7F7F9FF);
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    border-width: 1px;
+    border-color: #0000000A;
+    height: __EVENTS_H__px;
+}
+.cal-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-width: 1px;
+    border-color: #00000008;
+}
+.cal-panel-title {
+    font-size: __EVENT_FONT__px;
+    color: #4A4A58;
+}
+.cal-panel-stat {
+    font-size: __ERA_FONT__px;
+    color: #8A8A95;
+}
+.cal-no-event {
+    text-align: center;
+    padding: 6px;
+    font-size: __ERA_FONT__px;
+    color: #8A8A95;
+}
+.cal-event-row {
+    display: flex;
+    align-items: center;
+    padding: __EVENT_ROW_PAD__px __EVENT_ROW_PAD__px;
+    margin-bottom: 3px;
+    background: linear-gradient(to right, #F7F7F9FF, #FFFFFFFF);
+    border-radius: 6px;
+    border-width: 2px;
+    border-color: #E6B450;
+    gap: 6px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.02);
+}
+.cal-event-icon {
+    font-size: __EVENT_FONT__px;
+}
+.cal-event-content {
+    display: flex;
+    flex-direction: column;
+}
+.cal-event-name {
+    font-size: __EVENT_FONT__px;
+    color: #2A2A35;
+}
+.cal-event-desc {
+    font-size: __EVENT_DESC_FONT__px;
+    color: #6A6A78;
+}
+.cal-event-tag {
+    font-size: __EVENT_FONT__px;
+    color: #8A8A95;
+}
+
+/* === 底部按钮栏 === */
+.cal-bottom {
+    display: flex;
+    gap: __GAP__px;
+    justify-content: center;
+}
+.cal-btn {
+    width: __BTN__px;
+    height: __BTN_H__px;
+    padding: 0;
+    background: linear-gradient(to bottom, #FFFFFFFF, #EDEDF0FF);
+    border-width: 1px;
+    border-color: #00000014;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    color: #3A3A48;
+    font-size: __BTN_FONT__px;
+    text-align: center;
+    line-height: __BTN_H__px;
+}

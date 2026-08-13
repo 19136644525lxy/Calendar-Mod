@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "calendarmod",
+	"version": "${version}",
+	"name": "Calendar Mod",
+	"description": "基于 HtmlCraft API 的 Minecraft 游戏内日历模组，支持每存档独立日历与自定义历法",
+	"authors": [
+		"Yifei"
+	],
+	"contact": {
+		"homepage": "https://github.com/19136644525lxy",
+		"sources": "https://github.com/19136644525lxy/Calendar-Mod"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/calendarmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.calendar.mod.CalendarMod"
+		],
+		"client": [
+			"com.calendar.mod.client.CalendarModClient"
+		],
+		"modmenu": [
+			"com.calendar.mod.client.CalendarModMenuApi"
+		]
+	},
+	"mixins": [
+		"calendarmod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*",
+		"htmlcraftapi": "*",
+		"cloth-config": "*"
+	},
+	"recommends": {
+		"modmenu": ">=18.0.0"
+	}
+}
