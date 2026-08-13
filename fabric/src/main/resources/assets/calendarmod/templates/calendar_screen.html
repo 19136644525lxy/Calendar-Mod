@@ -1,0 +1,33 @@
+<div class="cal-root">
+  <div class="cal-header">
+    <button id="prev-month" class="cal-nav-btn">&#9664;</button>
+    <div class="cal-title-wrap">
+      <div class="cal-era">{{era_name}}</div>
+      <div class="cal-title">{{year}}{{year_label}} {{month_name}}</div>
+      <div class="cal-subtitle">{{month_events}}事件 &middot; {{today_weekday}}</div>
+    </div>
+    <button id="next-month" class="cal-nav-btn">&#9654;</button>
+  </div>
+
+  <div class="cal-week-row">
+    {{week_row}}
+  </div>
+
+  <div class="cal-grid">
+    {{day_cells}}
+  </div>
+
+  <div id="events-scroll" class="cal-events-panel">
+    <div class="cal-panel-header">
+      <div class="cal-panel-title">&#128197; {{today_events_label}}</div>
+      <div class="cal-panel-stat">{{year}}{{year_label}} {{month_name}}</div>
+    </div>
+    {{events_content}}
+  </div>
+
+  <div class="cal-bottom">
+    <button id="open-client-config" class="cal-btn">&#9881; {{client_config_label}}</button>
+    <button id="open-calendar-config" class="cal-btn">&#128197; {{calendar_config_label}}</button>
+    <button id="open-events" class="cal-btn">&#10133; {{add_event_label}}</button>
+  </div>
+</div>

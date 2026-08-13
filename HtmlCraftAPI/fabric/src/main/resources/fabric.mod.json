@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "htmlcraftapi",
+	"version": "${version}",
+	"name": "HtmlCraft API",
+	"description": "HTML/CSS 渲染 API，为 Minecraft 模组提供 HTML+CSS 的 GUI 渲染能力",
+	"authors": [
+		"HtmlCraft"
+	],
+	"contact": {
+		"homepage": "https://github.com/htmlcraft",
+		"sources": "https://github.com/htmlcraft/htmlcraft-api"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/htmlcraftapi/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.htmlcraft.api.HtmlCraftAPI"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

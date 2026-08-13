@@ -1,0 +1,74 @@
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'maven-publish'
+}
+
+// 本地前置 jar 仓库（Cloth Config、ModMenu）
+repositories {
+	mavenCentral()
+	flatDir {
+		dirs 'libs'
+	}
+}
+
+dependencies {
+	// Minecraft + Yarn 映射 + Fabric Loader
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API（事件、网络、命令、按键绑定、HUD 渲染等基础能力）
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// HtmlCraft API（复合构建引入，提供 HTML/CSS 渲染能力）
+	modImplementation 'com.htmlcraft.api:htmlcraftapi:1.0.0-1.20.1fabric'
+
+	// Cloth Config API（本地 jar，配置界面构建）
+	modImplementation files('libs/cloth-config-11.1.136-fabric.jar')
+
+	// ModMenu（本地 jar，模组列表配置按钮入口，对应 Forge 的 Catalogue）
+	modImplementation files('libs/modmenu-7.2.2.jar')
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 17
+	it.options.encoding = 'UTF-8'
+}
+
+// 源码 jar 自动生成（强制规则）
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+	def projectName = project.name
+	inputs.property "projectName", projectName
+
+	from("LICENSE") {
+		rename { "${it}_$projectName"}
+	}
+}
+
+// Maven 发布配置
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+	repositories {
+		// 按需配置发布仓库
+	}
+}

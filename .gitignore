@@ -28,12 +28,19 @@ run-data
 # === 临时目录（Forge 映射源码等，体积大不应上传） ===
 temp/
 
+# === Fabric Yarn 映射源码（开发参考，体积大不应上传） ===
+sources/
+
 # === 构建产物目录 ===
 mcmodsrepo/
 
 # === 本地依赖 jar（构建时需自行放置） ===
 libs/*
 !libs/.gitkeep
+fabric/libs/*
+!fabric/libs/.gitkeep
+HtmlCraftAPI/fabric/libs/*
+!HtmlCraftAPI/fabric/libs/.gitkeep
 
 # === Maven 发布产物 ===
 HtmlCraftAPI/build
@@ -50,3 +57,8 @@ $RECYCLE.BIN/
 
 # === 编译产物 ===
 *.class
+
+# === Python 缓存 ===
+__pycache__/
+*.pyc
+*.pyo
