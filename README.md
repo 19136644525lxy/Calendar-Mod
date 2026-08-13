@@ -1,6 +1,6 @@
 # Calendar Mod
 
-> Minecraft 1.20.1 Forge 可自定义历法系统
+> Minecraft 1.20.1 Forge / Fabric 可自定义历法系统
 
 ## 简介
 
@@ -43,7 +43,7 @@
 | 资源包扩展 | 支持通过资源包新增/替换样式，自动识别合并 |
 | 全屏自适应 | 根据屏幕分辨率动态计算布局，兼容不同分辨率 |
 | 可拖拽 HUD | HUD 支持鼠标拖拽调整位置，位置自动保存 |
-| Cloth Config | 使用 Cloth Config 提供配置界面，联动 Catalogue 模组列表 |
+| Cloth Config | 使用 Cloth Config 提供配置界面，Forge 版联动 Catalogue，Fabric 版联动 ModMenu |
 | 本地化 | 支持中英文双语 |
 
 ### 网络同步
@@ -59,22 +59,48 @@
 
 ## 环境要求
 
+本模组同时支持 Forge 和 Fabric 两个加载器，按所用加载器选择对应版本即可。
+
+### 通用依赖
+
 | 依赖 | 版本 |
 |------|------|
 | Minecraft | 1.20.1 |
-| Forge | 47.x |
 | Java | 17 |
-| HtmlCraft API | 1.0.0-1.20.1forge |
+| HtmlCraft API | 1.0.0-1.20.1forge / 1.0.0-1.20.1fabric（与加载器对应） |
 | Cloth Config | 11.x（必需，用于配置界面） |
+
+### Forge 版附加依赖
+
+| 依赖 | 版本 |
+|------|------|
+| Forge | 47.x |
 | Catalogue | （可选，用于模组列表配置按钮） |
+
+### Fabric 版附加依赖
+
+| 依赖 | 版本 |
+|------|------|
+| Fabric Loader | >=0.19.3 |
+| Fabric API | 0.92.11+1.20.1 |
+| ModMenu | 7.x（可选，用于模组列表配置按钮，对应 Forge 的 Catalogue） |
 
 ---
 
 ## 安装
 
+### Forge 版
+
 1. 将 `htmlcraftapi-1.0.0-1.20.1forge.jar`、`calendarmod-1.0.0-1.20.1forge.jar` 和 `cloth-config-11.x-forge.jar` 放入 `mods` 文件夹
 2. （可选）放入 Catalogue 以在模组列表中显示配置按钮
 3. 启动游戏
+
+### Fabric 版
+
+1. 安装 Fabric Loader，确保已放入 Fabric API
+2. 将 `htmlcraftapi-1.0.0-1.20.1fabric.jar`、`calendarmod-1.0.0-1.20.1fabric.jar` 和 `cloth-config-11.x-fabric.jar` 放入 `mods` 文件夹
+3. （可选）放入 ModMenu 以在模组列表中显示配置按钮
+4. 启动游戏
 
 ---
 

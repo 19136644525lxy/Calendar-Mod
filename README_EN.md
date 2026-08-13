@@ -1,6 +1,6 @@
 # Calendar Mod
 
-> Customizable Calendar System for Minecraft 1.20.1 Forge
+> Customizable Calendar System for Minecraft 1.20.1 Forge / Fabric
 
 ## Introduction
 
@@ -43,7 +43,7 @@
 | Resource Pack Extension | Add/replace styles via resource packs, auto-detected and merged |
 | Full-Screen Adaptive | Dynamically calculates layout based on screen resolution |
 | Draggable HUD | HUD supports mouse drag to reposition, position auto-saved |
-| Cloth Config | Configuration interface via Cloth Config, integrated with Catalogue mod list |
+| Cloth Config | Configuration interface via Cloth Config; Forge integrates with Catalogue, Fabric integrates with ModMenu |
 | Localization | Supports both Chinese and English |
 
 ### Network Sync
@@ -59,22 +59,48 @@
 
 ## Requirements
 
+This mod supports both Forge and Fabric loaders. Choose the matching version for your loader.
+
+### Common Dependencies
+
 | Dependency | Version |
 |------------|---------|
 | Minecraft | 1.20.1 |
-| Forge | 47.x |
 | Java | 17 |
-| HtmlCraft API | 1.0.0-1.20.1forge |
+| HtmlCraft API | 1.0.0-1.20.1forge / 1.0.0-1.20.1fabric (matching your loader) |
 | Cloth Config | 11.x (required, for config UI) |
+
+### Forge-specific Dependencies
+
+| Dependency | Version |
+|------------|---------|
+| Forge | 47.x |
 | Catalogue | (optional, for mod list config button) |
+
+### Fabric-specific Dependencies
+
+| Dependency | Version |
+|------------|---------|
+| Fabric Loader | >=0.19.3 |
+| Fabric API | 0.92.11+1.20.1 |
+| ModMenu | 7.x (optional, for mod list config button, equivalent to Forge's Catalogue) |
 
 ---
 
 ## Installation
 
+### Forge Version
+
 1. Place `htmlcraftapi-1.0.0-1.20.1forge.jar`, `calendarmod-1.0.0-1.20.1forge.jar`, and `cloth-config-11.x-forge.jar` into the `mods` folder
 2. (Optional) Add Catalogue for a config button in the mod list
 3. Launch the game
+
+### Fabric Version
+
+1. Install Fabric Loader and ensure Fabric API is present
+2. Place `htmlcraftapi-1.0.0-1.20.1fabric.jar`, `calendarmod-1.0.0-1.20.1fabric.jar`, and `cloth-config-11.x-fabric.jar` into the `mods` folder
+3. (Optional) Add ModMenu for a config button in the mod list
+4. Launch the game
 
 ---
 

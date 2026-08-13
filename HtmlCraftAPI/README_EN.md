@@ -1,6 +1,6 @@
 # HtmlCraft API
 
-> HTML/CSS GUI Rendering Engine for Minecraft 1.20.1 Forge
+> HTML/CSS GUI Rendering Engine for Minecraft 1.20.1 Forge / Fabric
 
 ## Introduction
 
@@ -24,10 +24,23 @@
 
 ## Requirements
 
+This API ships in two versions, Forge and Fabric. Pick the jar matching your loader.
+
+### Forge Version
+
 | Dependency | Version |
 |------------|---------|
 | Minecraft | 1.20.1 |
 | Forge | 47.x |
+| Java | 17 |
+
+### Fabric Version
+
+| Dependency | Version |
+|------------|---------|
+| Minecraft | 1.20.1 |
+| Fabric Loader | >=0.19.3 |
+| Fabric API | 0.92.11+1.20.1 |
 | Java | 17 |
 
 ---
@@ -36,11 +49,12 @@
 
 ### As a Mod Dependency
 
-Place `htmlcraftapi-1.0.0-1.20.1forge.jar` into the `mods` folder.
+- Forge: place `htmlcraftapi-1.0.0-1.20.1forge.jar` into the `mods` folder
+- Fabric: place `htmlcraftapi-1.0.0-1.20.1fabric.jar` into the `mods` folder
 
 ### As a Development Dependency
 
-Add to your `build.gradle`:
+**Forge version** (Mojang mappings):
 
 ```gradle
 dependencies {
@@ -48,9 +62,26 @@ dependencies {
 }
 ```
 
+**Fabric version** (Yarn mappings, with Loom composite build):
+
+```gradle
+dependencies {
+    modImplementation 'com.htmlcraft.api:htmlcraftapi:1.0.0-1.20.1fabric'
+}
+```
+
+For Fabric, `includeBuild` is recommended to bring in the source project for debugging:
+
+```gradle
+// settings.gradle
+includeBuild '../HtmlCraftAPI/fabric'
+```
+
 ---
 
 ## Quick Start
+
+> Examples below use Forge (Mojang mappings) API. The Fabric version only differs in class names (e.g. `Component` → `Text`, `Minecraft` → `MinecraftClient`, `GuiGraphics` → `DrawContext`); the HTML/CSS API is identical.
 
 ### 1. Create a Screen via Builder
 
@@ -105,6 +136,17 @@ public class MyScreen extends HtmlScreen {
     }
 }
 ```
+
+### 3. Forge / Fabric Mapping Reference
+
+| Forge (Mojang) | Fabric (Yarn) | Description |
+|-----------------|---------------|-------------|
+| `net.minecraft.network.chat.Component` | `net.minecraft.text.Text` | Text component |
+| `net.minecraft.client.Minecraft` | `net.minecraft.client.MinecraftClient` | Client instance |
+| `net.minecraft.client.gui.GuiGraphics` | `net.minecraft.client.gui.DrawContext` | Draw context |
+| `net.minecraft.world.level.saveddata.SavedData` | `net.minecraft.world.PersistentState` | Save persistence |
+| `net.minecraft.network.FriendlyByteBuf` | `net.minecraft.network.PacketByteBuf` | Network buffer |
+| `net.minecraftforge.network.SimpleChannel` | `ServerPlayNetworking` / `ClientPlayNetworking` | Network channel |
 
 ---
 

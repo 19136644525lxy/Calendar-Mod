@@ -1,6 +1,6 @@
 # HtmlCraft API
 
-> Minecraft 1.20.1 Forge HTML/CSS GUI 渲染引擎
+> Minecraft 1.20.1 Forge / Fabric HTML/CSS GUI 渲染引擎
 
 ## 简介
 
@@ -24,10 +24,23 @@
 
 ## 环境要求
 
+本 API 同时提供 Forge 和 Fabric 两个版本，按所用加载器选择对应 jar 即可。
+
+### Forge 版
+
 | 依赖 | 版本 |
 |------|------|
 | Minecraft | 1.20.1 |
 | Forge | 47.x |
+| Java | 17 |
+
+### Fabric 版
+
+| 依赖 | 版本 |
+|------|------|
+| Minecraft | 1.20.1 |
+| Fabric Loader | >=0.19.3 |
+| Fabric API | 0.92.11+1.20.1 |
 | Java | 17 |
 
 ---
@@ -36,11 +49,12 @@
 
 ### 作为模组前置依赖
 
-将 `htmlcraftapi-1.0.0-1.20.1forge.jar` 放入 `mods` 文件夹即可。
+- Forge：将 `htmlcraftapi-1.0.0-1.20.1forge.jar` 放入 `mods` 文件夹
+- Fabric：将 `htmlcraftapi-1.0.0-1.20.1fabric.jar` 放入 `mods` 文件夹
 
 ### 作为开发依赖
 
-在 `build.gradle` 中添加：
+**Forge 版**（Mojang 官方映射）：
 
 ```gradle
 dependencies {
@@ -48,9 +62,26 @@ dependencies {
 }
 ```
 
+**Fabric 版**（Yarn 映射，配合 Loom 复合构建）：
+
+```gradle
+dependencies {
+    modImplementation 'com.htmlcraft.api:htmlcraftapi:1.0.0-1.20.1fabric'
+}
+```
+
+Fabric 版推荐通过 `includeBuild` 引入源码工程以便调试：
+
+```gradle
+// settings.gradle
+includeBuild '../HtmlCraftAPI/fabric'
+```
+
 ---
 
 ## 快速上手
+
+> 以下示例使用 Forge (Mojang 映射) API。Fabric 版仅类名存在差异（如 `Component` → `Text`、`Minecraft` → `MinecraftClient`、`GuiGraphics` → `DrawContext`），HTML/CSS API 完全一致。
 
 ### 1. 通过 Builder 创建界面
 
@@ -105,6 +136,17 @@ public class MyScreen extends HtmlScreen {
     }
 }
 ```
+
+### 3. Forge / Fabric 映射对照
+
+| Forge (Mojang) | Fabric (Yarn) | 说明 |
+|-----------------|---------------|------|
+| `net.minecraft.network.chat.Component` | `net.minecraft.text.Text` | 文本组件 |
+| `net.minecraft.client.Minecraft` | `net.minecraft.client.MinecraftClient` | 客户端实例 |
+| `net.minecraft.client.gui.GuiGraphics` | `net.minecraft.client.gui.DrawContext` | 绘制上下文 |
+| `net.minecraft.world.level.saveddata.SavedData` | `net.minecraft.world.PersistentState` | 存档持久化 |
+| `net.minecraft.network.FriendlyByteBuf` | `net.minecraft.network.PacketByteBuf` | 网络缓冲区 |
+| `net.minecraftforge.network.SimpleChannel` | `ServerPlayNetworking` / `ClientPlayNetworking` | 网络通道 |
 
 ---
 
