@@ -92,8 +92,9 @@ This mod ships in three versions. Choose the matching version for your loader an
 | Fabric Loader | >=0.19.3 |
 | Fabric API | 0.157.0+26.2 |
 | Java | 25 |
-| HtmlCraft API | 1.0.0-26.2fabric |
-| Cloth Config / ModMenu | Built into jar, no separate installation needed |
+| HtmlCraft API | 1.0.0-26.2fabric (required) |
+| Cloth Config | 26.2.155 (required, config UI) |
+| ModMenu | 20.0.x (optional, mod list config button) |
 
 ---
 
@@ -115,8 +116,9 @@ This mod ships in three versions. Choose the matching version for your loader an
 ### Fabric Version (26.2)
 
 1. Install Fabric Loader and ensure Fabric API is present
-2. Place `htmlcraftapi-1.0.0-26.2fabric.jar` and `calendarmod-1.0.0-26.2fabric.jar` into the `mods` folder
-3. Launch the game (Cloth Config and ModMenu are built into the jar, no separate installation needed)
+2. Place `htmlcraftapi-1.0.0-26.2fabric.jar`, `calendarmod-1.0.0-26.2fabric.jar`, and `cloth-config-26.2.155.jar` into the `mods` folder
+3. (Optional) Add `modmenu-20.0.x.jar` for a config button in the mod list
+4. Launch the game
 
 ---
 

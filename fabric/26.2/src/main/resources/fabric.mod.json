@@ -34,7 +34,9 @@
 		"java": ">=25",
 		"fabric-api": "*",
 		"htmlcraftapi": "*",
-		"cloth-config": "*",
-		"modmenu": "*"
+		"cloth-config": "*"
+	},
+	"recommends": {
+		"modmenu": ">=20.0.0"
 	}
 }

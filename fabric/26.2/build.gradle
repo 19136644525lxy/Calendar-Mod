@@ -41,13 +41,11 @@ dependencies {
 	// HtmlCraft API（复合构建引入，提供 HTML/CSS 渲染能力）
 	implementation 'com.htmlcraft.api:htmlcraftapi:1.0.0-26.2fabric'
 
-	// Cloth Config API（配置界面构建，打包进 fat jar）
+	// Cloth Config API（配置界面构建，不内置，需玩家单独安装）
 	implementation "me.shedaniel.cloth:cloth-config-fabric:26.2.155"
-	include "me.shedaniel.cloth:cloth-config-fabric:26.2.155"
 
-	// ModMenu（模组列表配置按钮入口，打包进 fat jar）
+	// ModMenu（模组列表配置按钮入口，可选，不内置）
 	implementation "com.terraformersmc:modmenu:20.0.1"
-	include "com.terraformersmc:modmenu:20.0.1"
 }
 
 processResources {
