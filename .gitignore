@@ -39,11 +39,9 @@ libs/*
 !libs/.gitkeep
 fabric/libs/*
 !fabric/libs/.gitkeep
-HtmlCraftAPI/fabric/libs/*
-!HtmlCraftAPI/fabric/libs/.gitkeep
 
-# === Maven 发布产物 ===
-HtmlCraftAPI/build
+# === HtmlCraftAPI 已独立仓库，整体忽略 ===
+HtmlCraftAPI/
 
 # === 操作系统生成文件 ===
 .DS_Store
