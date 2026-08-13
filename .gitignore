@@ -39,6 +39,8 @@ libs/*
 !libs/.gitkeep
 fabric/libs/*
 !fabric/libs/.gitkeep
+fabric/26.2/libs/*
+!fabric/26.2/libs/.gitkeep
 
 # === HtmlCraftAPI 已独立仓库，整体忽略 ===
 HtmlCraftAPI/

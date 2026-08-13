@@ -1,0 +1,90 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+version = project.version
+group = project.maven_group
+
+repositories {
+	// 国内镜像源
+	maven {
+		name = 'Aliyun'
+		url = 'https://maven.aliyun.com/repository/public'
+	}
+	// Cloth Config Maven
+	maven {
+		name = 'Shedaniel'
+		url = 'https://maven.shedaniel.me/'
+	}
+	// ModMenu Maven
+	maven {
+		name = 'TerraformersMC'
+		url = 'https://maven.terraformersmc.com/releases/'
+	}
+	mavenCentral()
+}
+
+loom {
+	mods {
+		"calendarmod" {
+			sourceSet sourceSets.main
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// HtmlCraft API（复合构建引入，提供 HTML/CSS 渲染能力）
+	implementation 'com.htmlcraft.api:htmlcraftapi:1.0.0-26.2fabric'
+
+	// Cloth Config API（配置界面构建，打包进 fat jar）
+	implementation "me.shedaniel.cloth:cloth-config-fabric:26.2.155"
+	include "me.shedaniel.cloth:cloth-config-fabric:26.2.155"
+
+	// ModMenu（模组列表配置按钮入口，打包进 fat jar）
+	implementation "com.terraformersmc:modmenu:20.0.1"
+	include "com.terraformersmc:modmenu:20.0.1"
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+	it.options.encoding = 'UTF-8'
+}
+
+// 源码 jar 自动生成
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	archiveBaseName = 'calendarmod'
+	archiveVersion = "${project.version}"
+
+	from("LICENSE") {
+		rename { "${it}_calendarmod"}
+	}
+}
+
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+}

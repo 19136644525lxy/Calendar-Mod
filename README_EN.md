@@ -1,6 +1,6 @@
 # Calendar Mod
 
-> Customizable Calendar System for Minecraft 1.20.1 Forge / Fabric
+> Customizable Calendar System for Minecraft 1.20.1 Forge / Fabric and 26.2 Fabric
 
 ## Introduction
 
@@ -59,48 +59,64 @@
 
 ## Requirements
 
-This mod supports both Forge and Fabric loaders. Choose the matching version for your loader.
+This mod ships in three versions. Choose the matching version for your loader and Minecraft version.
 
-### Common Dependencies
+### Forge Version (1.20.1)
 
 | Dependency | Version |
 |------------|---------|
 | Minecraft | 1.20.1 |
-| Java | 17 |
-| HtmlCraft API | 1.0.0-1.20.1forge / 1.0.0-1.20.1fabric (matching your loader) |
-| Cloth Config | 11.x (required, for config UI) |
-
-### Forge-specific Dependencies
-
-| Dependency | Version |
-|------------|---------|
 | Forge | 47.x |
+| Java | 17 |
+| HtmlCraft API | 1.0.0-1.20.1forge |
+| Cloth Config | 11.x (required, for config UI) |
 | Catalogue | (optional, for mod list config button) |
 
-### Fabric-specific Dependencies
+### Fabric Version (1.20.1)
 
 | Dependency | Version |
 |------------|---------|
+| Minecraft | 1.20.1 |
 | Fabric Loader | >=0.19.3 |
 | Fabric API | 0.92.11+1.20.1 |
-| ModMenu | 7.x (optional, for mod list config button, equivalent to Forge's Catalogue) |
+| Java | 17 |
+| HtmlCraft API | 1.0.0-1.20.1fabric |
+| Cloth Config | 11.x (required, for config UI) |
+| ModMenu | 7.x (optional, for mod list config button) |
+
+### Fabric Version (26.2)
+
+| Dependency | Version |
+|------------|---------|
+| Minecraft | 26.2 |
+| Fabric Loader | >=0.19.3 |
+| Fabric API | 0.157.0+26.2 |
+| Java | 25 |
+| HtmlCraft API | 1.0.0-26.2fabric |
+| Cloth Config / ModMenu | Built into jar, no separate installation needed |
 
 ---
 
 ## Installation
 
-### Forge Version
+### Forge Version (1.20.1)
 
 1. Place `htmlcraftapi-1.0.0-1.20.1forge.jar`, `calendarmod-1.0.0-1.20.1forge.jar`, and `cloth-config-11.x-forge.jar` into the `mods` folder
 2. (Optional) Add Catalogue for a config button in the mod list
 3. Launch the game
 
-### Fabric Version
+### Fabric Version (1.20.1)
 
 1. Install Fabric Loader and ensure Fabric API is present
 2. Place `htmlcraftapi-1.0.0-1.20.1fabric.jar`, `calendarmod-1.0.0-1.20.1fabric.jar`, and `cloth-config-11.x-fabric.jar` into the `mods` folder
 3. (Optional) Add ModMenu for a config button in the mod list
 4. Launch the game
+
+### Fabric Version (26.2)
+
+1. Install Fabric Loader and ensure Fabric API is present
+2. Place `htmlcraftapi-1.0.0-26.2fabric.jar` and `calendarmod-1.0.0-26.2fabric.jar` into the `mods` folder
+3. Launch the game (Cloth Config and ModMenu are built into the jar, no separate installation needed)
 
 ---
 
@@ -334,4 +350,4 @@ Yifei
 
 ## Dependencies
 
-- [HtmlCraft API](./HtmlCraftAPI/README_EN.md) — HTML/CSS Rendering Engine
+- [HtmlCraft API](https://github.com/19136644525lxy/HtmlCraft-API) — HTML/CSS Rendering Engine
