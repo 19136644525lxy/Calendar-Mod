@@ -341,12 +341,13 @@ public class CalendarEventScreen extends Screen {
         // 26.2：背景由父类自动渲染，不显式调用 renderBackground
         int centerX = this.width / 2;
         int formStartX = centerX - 150;
-        int color = 0xE0E0E0;
+        int color = 0xFFE0E0E0;
 
         // 标题居中
+        // 26.2：text() 颜色为 ARGB 格式，必须带 0xFF alpha 前缀，否则 alpha=0 文字透明不可见
         String titleStr = this.title.getString();
-        graphics.text(this.font, titleStr, centerX - this.font.width(titleStr) / 2, TITLE_Y, 0xFFFFFF, true);
-        graphics.text(this.font, i18n("calendarmod.button.add_event"), formStartX, FORM_TITLE_Y, 0xFFD700, true);
+        graphics.text(this.font, titleStr, centerX - this.font.width(titleStr) / 2, TITLE_Y, 0xFFFFFFFF, true);
+        graphics.text(this.font, i18n("calendarmod.button.add_event"), formStartX, FORM_TITLE_Y, 0xFFFFD700, true);
 
         graphics.text(this.font, i18n("calendarmod.label.year"), formStartX, DATE_Y + 5, color, true);
         graphics.text(this.font, i18n("calendarmod.label.month"), formStartX + 80, DATE_Y + 5, color, true);
@@ -360,9 +361,9 @@ public class CalendarEventScreen extends Screen {
         if (!customColorMode) {
             ColorEntry ce = PRESET_COLORS[selectedColorIndex];
             graphics.fill(formStartX + 55, COLOR_LABEL_Y + 2, formStartX + 55 + 10, COLOR_LABEL_Y + 12, ce.argb);
-            graphics.text(this.font, ce.name + " " + String.format("#%06X", ce.argb & 0xFFFFFF), formStartX + 70, COLOR_LABEL_Y + 5, 0xCCCCCC, true);
+            graphics.text(this.font, ce.name + " " + String.format("#%06X", ce.argb & 0xFFFFFF), formStartX + 70, COLOR_LABEL_Y + 5, 0xFFCCCCCC, true);
         } else {
-            graphics.text(this.font, i18n("calendarmod.label.event_color") + ": " + customColorEdit.getValue(), formStartX + 180, COLOR_LABEL_Y + 5, 0xCCCCCC, true);
+            graphics.text(this.font, i18n("calendarmod.label.event_color") + ": " + customColorEdit.getValue(), formStartX + 180, COLOR_LABEL_Y + 5, 0xFFCCCCCC, true);
         }
 
         // 绘制颜色列表框背景
@@ -405,14 +406,14 @@ public class CalendarEventScreen extends Screen {
             graphics.fill(swatchX + COLOR_SWATCH_SIZE - 1, swatchY, swatchX + COLOR_SWATCH_SIZE, swatchY + COLOR_SWATCH_SIZE, 0xFFFFFFFF);
 
             // 颜色名称
-            graphics.text(this.font, ce.name, swatchX + COLOR_SWATCH_SIZE + 4, rowY + 4, selected ? 0xFFFFFF : 0xD0D0D0, true);
+            graphics.text(this.font, ce.name, swatchX + COLOR_SWATCH_SIZE + 4, rowY + 4, selected ? 0xFFFFFFFF : 0xFFD0D0D0, true);
 
             // 颜色十六进制值
-            graphics.text(this.font, String.format("#%06X", ce.argb & 0xFFFFFF), listX + listW - 45, rowY + 4, selected ? 0xCCCCCC : 0x8A8A8A, true);
+            graphics.text(this.font, String.format("#%06X", ce.argb & 0xFFFFFF), listX + listW - 45, rowY + 4, selected ? 0xFFCCCCCC : 0xFF8A8A8A, true);
 
             // 鼠标悬停提示
             if (mouseX >= listX && mouseX <= listX + listW && mouseY >= rowY && mouseY < rowY + COLOR_LIST_ROW_H) {
-                graphics.text(this.font, ce.name + " " + String.format("#%06X", ce.argb & 0xFFFFFF), mouseX + 10, mouseY - 12, 0xFFFFFF, true);
+                graphics.text(this.font, ce.name + " " + String.format("#%06X", ce.argb & 0xFFFFFF), mouseX + 10, mouseY - 12, 0xFFFFFFFF, true);
             }
         }
 
@@ -420,17 +421,17 @@ public class CalendarEventScreen extends Screen {
         graphics.text(this.font, i18n("calendarmod.label.event_fixed"), formStartX + 195, actionsY + 5, color, true);
 
         // 事件列表
-        graphics.text(this.font, i18n("calendarmod.label.event_list"), formStartX, LIST_TITLE_Y, 0xFFD700, true);
+        graphics.text(this.font, i18n("calendarmod.label.event_list"), formStartX, LIST_TITLE_Y, 0xFFFFD700, true);
         List<CalendarEvent> events = CalendarClientCache.INSTANCE.getEvents();
         int count = computeDisplayCount(events.size());
         for (int i = 0; i < count; i++) {
             CalendarEvent ev = events.get(i);
             int rowY = LIST_START_Y + i * LIST_ROW_HEIGHT;
-            int textCol = ev.getColor() == 0 ? 0xFFFFFF : ev.getColor();
+            int textCol = ev.getColor() == 0 ? 0xFFFFFFFF : ev.getColor();
             graphics.text(this.font, formatEvent(ev), formStartX, rowY + 5, textCol, true);
         }
         if (events.size() > count) {
-            graphics.text(this.font, "(" + events.size() + ")", formStartX, LIST_START_Y + count * LIST_ROW_HEIGHT + 4, 0xAAAAAA, true);
+            graphics.text(this.font, "(" + events.size() + ")", formStartX, LIST_START_Y + count * LIST_ROW_HEIGHT + 4, 0xFFAAAAAA, true);
         }
 
         // 绘制所有 addRenderableWidget 注册的组件（输入框、按钮）

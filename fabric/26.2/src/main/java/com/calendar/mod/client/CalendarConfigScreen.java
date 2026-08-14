@@ -200,13 +200,14 @@ public class CalendarConfigScreen extends Screen {
         // 26.2：背景由父类自动渲染，先画标签再调 super 画组件（与原 render 顺序一致）
         int centerX = this.width / 2;
         // 标题居中（GuiGraphicsExtractor 无 drawCenteredTextWithShadow，用 text + 手动算宽度）
+        // 26.2：text() 颜色为 ARGB 格式，必须带 0xFF alpha 前缀，否则 alpha=0 文字透明不可见
         String titleStr = this.title.getString();
-        graphics.text(this.font, titleStr, centerX - this.font.width(titleStr) / 2, 18, 0xFFFFFF, true);
+        graphics.text(this.font, titleStr, centerX - this.font.width(titleStr) / 2, 18, 0xFFFFFFFF, true);
 
         int formWidth = LABEL_WIDTH + COL_GAP + EDIT_WIDTH;
         int labelX = centerX - formWidth / 2;
         int startY = 50;
-        int color = 0xE0E0E0;
+        int color = 0xFFE0E0E0;
 
         // 行标签（垂直居中于输入框：输入框高 18，文字基线偏移 5）
         graphics.text(this.font, i18n("calendarmod.label.era_name"), labelX, startY + 5, color, true);
